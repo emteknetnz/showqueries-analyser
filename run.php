@@ -1,6 +1,6 @@
 <?php
 
-$s = file_get_contents('page-source.html');
+$s = file_get_contents('page-source.txt');
 
 // <p class="alert alert-warning">
 
