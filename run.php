@@ -18,6 +18,7 @@ $s = file_get_contents('page-source.html');
 preg_match_all('#<p class="alert alert\-warning">(.+?)</p>#s', $s, $m);
 
 $total_time = 0;
+$total_count = 0;
 
 $res = [];
 foreach ($m[1] as $s) {
@@ -29,6 +30,7 @@ foreach ($m[1] as $s) {
     $res[$sql]['count']++;
     $res[$sql]['time'] += $m2[3];
     $total_time += $m2[3];
+    $total_count++;
 }
 usort($res, function ($a, $b) use ($res) {
     return $a <=> $b;
@@ -40,8 +42,10 @@ foreach ($res as $sql => &$data) {
 }
 
 $tt = round($total_time, 4);
+$tc = $total_count;
 echo "Wrote to output.txt\n";
 file_put_contents('output.txt', implode("\n\n", [
     "Total time: $tt",
+    "Total count: $tc",
     var_export($res, true)
 ]));
